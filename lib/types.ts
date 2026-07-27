@@ -1,4 +1,4 @@
-export type DocumentType = 'invoice' | 'quotation' | 'agreement';
+export type DocumentType = 'invoice' | 'quotation' | 'agreement' | 'sla' | 'delivery_acceptance' | 'maintenance_agreement' | 'source_code_handover';
 export type PaperSize = 'a4' | 'a5' | 'legal';
 
 export interface CompanyDetails {
