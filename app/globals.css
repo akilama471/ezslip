@@ -1,26 +1,136 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-brand-50: #eff6ff;
+  --color-brand-100: #dbeafe;
+  --color-brand-500: #3b82f6;
+  --color-brand-600: #2563eb;
+  --color-brand-900: #1e3a8a;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+:root {
+  --background: #f1f5f9;
+  --foreground: #0f172a;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #0f172a;
+    --foreground: #f8fafc;
   }
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
 }
+
+/* Premium Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #475569;
+}
+
+/* Glassmorphism utility */
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+.dark .glass {
+  background: rgba(30, 41, 59, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Paper Sizes and Print Styles */
+.paper {
+  background: white;
+  color: black;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+}
+.dark .paper {
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+}
+
+/* A4: 210mm x 297mm */
+.paper-a4 {
+  width: 210mm;
+  min-height: 297mm;
+  padding: 20mm;
+}
+
+/* A5: 148mm x 210mm */
+.paper-a5 {
+  width: 148mm;
+  min-height: 210mm;
+  padding: 15mm;
+}
+
+/* Legal: 8.5in x 14in (216mm x 356mm) */
+.paper-legal {
+  width: 216mm;
+  min-height: 356mm;
+  padding: 20mm;
+}
+
+@media print {
+  body {
+    background: transparent;
+    color: black;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Hide UI elements during print */
+  .no-print, .sidebar {
+    display: none !important;
+  }
+
+  .print-area {
+    width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
+    display: block !important;
+  }
+
+  .paper {
+    box-shadow: none !important;
+    margin: 0 !important;
+    width: 100% !important;
+    min-height: auto !important;
+    /* Ensure the padding matches the visual padding in print if needed, but often browsers add their own margins. We'll set padding to 0 and rely on the page setup, or keep padding. Let's keep padding as it acts as our margins. */
+  }
+
+  /* Reset layout constraints for print */
+  main {
+    display: block !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+}
+
+/* Page size rules for print dialog */
+@page {
+  margin: 0;
+}
+@page a4 { size: A4; }
+@page a5 { size: A5; }
+@page legal { size: legal; }
