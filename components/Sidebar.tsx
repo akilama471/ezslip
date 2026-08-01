@@ -35,6 +35,10 @@ export function Sidebar() {
                 <option value="invoice">Invoice</option>
                 <option value="quotation">Quotation</option>
                 <option value="agreement">Developer Agreement</option>
+                <option value="sla">Software License Agreement</option>
+                <option value="delivery_acceptance">Delivery & Acceptance</option>
+                <option value="maintenance_agreement">Maintenance / Support</option>
+                <option value="source_code_handover">Source Code Handover</option>
               </select>
             </div>
             <div>
@@ -160,113 +164,119 @@ export function Sidebar() {
         </section>
 
         {/* Conditional Sections based on Document Type */}
-        {data.type !== "agreement" && (
-          <section>
-            <div className="flex items-center justify-between border-b pb-2 mb-4">
-              <h2 className="flex items-center gap-2 font-semibold text-gray-800">
-                <FileText size={18} className="text-amber-500" />
-                Line Items
-              </h2>
-              <button 
-                onClick={addItem}
-                className="text-xs flex items-center gap-1 bg-amber-100 text-amber-700 px-2 py-1 rounded hover:bg-amber-200 transition"
-              >
-                <Plus size={14} /> Add
-              </button>
-            </div>
-            
-            <div className="space-y-4">
-              {data.items.map((item, i) => (
-                <div key={item.id} className="bg-gray-50 p-3 rounded-lg border border-gray-200 relative group">
-                  <button
-                    onClick={() => removeItem(item.id)}
-                    className="absolute -top-2 -right-2 bg-red-100 text-red-600 p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+        {(() => {
+          const isLongForm = ['agreement', 'sla', 'delivery_acceptance', 'maintenance_agreement', 'source_code_handover'].includes(data.type);
+
+          if (!isLongForm) {
+            return (
+              <section>
+                <div className="flex items-center justify-between border-b pb-2 mb-4">
+                  <h2 className="flex items-center gap-2 font-semibold text-gray-800">
+                    <FileText size={18} className="text-amber-500" />
+                    Line Items
+                  </h2>
+                  <button 
+                    onClick={addItem}
+                    className="text-xs flex items-center gap-1 bg-amber-100 text-amber-700 px-2 py-1 rounded hover:bg-amber-200 transition"
                   >
-                    <Trash2 size={14} />
+                    <Plus size={14} /> Add
                   </button>
-                  <input
-                    type="text"
-                    placeholder="Description"
-                    className="w-full rounded border-gray-300 border p-1.5 text-sm mb-2"
-                    value={item.description}
-                    onChange={(e) => updateItem(item.id, { description: e.target.value })}
-                  />
-                  <div className="flex gap-2">
-                    <div className="flex-1">
-                      <label className="text-xs text-gray-500">Qty</label>
+                </div>
+                
+                <div className="space-y-4">
+                  {data.items.map((item, i) => (
+                    <div key={item.id} className="bg-gray-50 p-3 rounded-lg border border-gray-200 relative group">
+                      <button
+                        onClick={() => removeItem(item.id)}
+                        className="absolute -top-2 -right-2 bg-red-100 text-red-600 p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                      >
+                        <Trash2 size={14} />
+                      </button>
                       <input
-                        type="number"
-                        className="w-full rounded border-gray-300 border p-1.5 text-sm"
-                        value={item.quantity}
-                        onChange={(e) => updateItem(item.id, { quantity: Number(e.target.value) })}
+                        type="text"
+                        placeholder="Description"
+                        className="w-full rounded border-gray-300 border p-1.5 text-sm mb-2"
+                        value={item.description}
+                        onChange={(e) => updateItem(item.id, { description: e.target.value })}
                       />
+                      <div className="flex gap-2">
+                        <div className="flex-1">
+                          <label className="text-xs text-gray-500">Qty</label>
+                          <input
+                            type="number"
+                            className="w-full rounded border-gray-300 border p-1.5 text-sm"
+                            value={item.quantity}
+                            onChange={(e) => updateItem(item.id, { quantity: Number(e.target.value) })}
+                          />
+                        </div>
+                        <div className="flex-1">
+                          <label className="text-xs text-gray-500">Price</label>
+                          <input
+                            type="number"
+                            className="w-full rounded border-gray-300 border p-1.5 text-sm"
+                            value={item.unitPrice}
+                            onChange={(e) => updateItem(item.id, { unitPrice: Number(e.target.value) })}
+                          />
+                        </div>
+                      </div>
                     </div>
-                    <div className="flex-1">
-                      <label className="text-xs text-gray-500">Price</label>
-                      <input
-                        type="number"
-                        className="w-full rounded border-gray-300 border p-1.5 text-sm"
-                        value={item.unitPrice}
-                        onChange={(e) => updateItem(item.id, { unitPrice: Number(e.target.value) })}
-                      />
-                    </div>
+                  ))}
+                </div>
+                
+                <div className="mt-6 space-y-3">
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-700 mb-1">Notes</label>
+                    <textarea
+                      rows={2}
+                      className="w-full rounded-md border border-gray-300 p-2 text-sm outline-none focus:border-amber-500"
+                      value={data.notes}
+                      onChange={(e) => updateData({ notes: e.target.value })}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-700 mb-1">Terms & Conditions</label>
+                    <textarea
+                      rows={2}
+                      className="w-full rounded-md border border-gray-300 p-2 text-sm outline-none focus:border-amber-500"
+                      value={data.terms}
+                      onChange={(e) => updateData({ terms: e.target.value })}
+                    />
                   </div>
                 </div>
-              ))}
-            </div>
-            
-            <div className="mt-6 space-y-3">
-              <div>
-                <label className="block text-xs font-semibold text-gray-700 mb-1">Notes</label>
-                <textarea
-                  rows={2}
-                  className="w-full rounded-md border border-gray-300 p-2 text-sm outline-none focus:border-amber-500"
-                  value={data.notes}
-                  onChange={(e) => updateData({ notes: e.target.value })}
-                />
-              </div>
-              <div>
-                <label className="block text-xs font-semibold text-gray-700 mb-1">Terms & Conditions</label>
-                <textarea
-                  rows={2}
-                  className="w-full rounded-md border border-gray-300 p-2 text-sm outline-none focus:border-amber-500"
-                  value={data.terms}
-                  onChange={(e) => updateData({ terms: e.target.value })}
-                />
-              </div>
-            </div>
-          </section>
-        )}
-
-        {data.type === "agreement" && (
-          <section>
-            <h2 className="flex items-center gap-2 font-semibold text-gray-800 border-b pb-2 mb-4">
-              <FileText size={18} className="text-purple-500" />
-              Agreement Content
-            </h2>
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
-                <input
-                  type="text"
-                  className="w-full rounded-md border border-gray-300 p-2 text-sm focus:ring-2 focus:ring-purple-500 outline-none"
-                  value={data.agreementTitle || ""}
-                  onChange={(e) => updateData({ agreementTitle: e.target.value })}
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Body (Multi-page supported)</label>
-                <textarea
-                  rows={15}
-                  className="w-full rounded-md border border-gray-300 p-3 text-sm font-mono leading-relaxed focus:ring-2 focus:ring-purple-500 outline-none resize-y"
-                  value={data.agreementContent || ""}
-                  onChange={(e) => updateData({ agreementContent: e.target.value })}
-                  placeholder="Enter your long form agreement here..."
-                />
-              </div>
-            </div>
-          </section>
-        )}
+              </section>
+            );
+          } else {
+            return (
+              <section>
+                <h2 className="flex items-center gap-2 font-semibold text-gray-800 border-b pb-2 mb-4">
+                  <FileText size={18} className="text-purple-500" />
+                  Document Content
+                </h2>
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
+                    <input
+                      type="text"
+                      className="w-full rounded-md border border-gray-300 p-2 text-sm focus:ring-2 focus:ring-purple-500 outline-none"
+                      value={data.agreementTitle || ""}
+                      onChange={(e) => updateData({ agreementTitle: e.target.value })}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Body (Multi-page supported)</label>
+                    <textarea
+                      rows={15}
+                      className="w-full rounded-md border border-gray-300 p-3 text-sm font-mono leading-relaxed focus:ring-2 focus:ring-purple-500 outline-none resize-y"
+                      value={data.agreementContent || ""}
+                      onChange={(e) => updateData({ agreementContent: e.target.value })}
+                      placeholder="Enter your long form text here..."
+                    />
+                  </div>
+                </div>
+              </section>
+            );
+          }
+        })()}
 
       </div>
     </div>

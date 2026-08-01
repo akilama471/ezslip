@@ -45,7 +45,34 @@ export default function TemplateSelectionPage() {
     if (docType === "sla") {
       boilerplate = {
         agreementTitle: "Software License Agreement",
-        agreementContent: "This Software License Agreement (the \"Agreement\") is made between the Licensor and the Licensee.\n\n1. Grant of License\nLicensor grants Licensee a non-exclusive, non-transferable license to use the Software for internal business purposes.\n\n2. Restrictions\nLicensee shall not modify, reverse engineer, decompile, or distribute the Software.\n\n3. Term and Termination\nThis Agreement is effective until terminated. Licensor may terminate if Licensee breaches any term."
+        agreementContent: `This Software License Agreement (the "Agreement") is entered into by and between Nextgenware ("Licensor") and the Client ("Licensee").
+
+1. GRANT OF LICENSE
+Licensor grants Licensee a non-exclusive, non-transferable license to use the Software in accordance with the permitted use terms.
+
+2. LICENSE RESTRICTIONS
+Licensee shall not copy, redistribute, resell, rent, lease, reverse engineer, decompile, modify, or create derivative works from the Software without explicit permission.
+
+3. PLATFORM OWNERSHIP
+Platform framework, architecture, reusable modules, APIs, and proprietary libraries remain the exclusive Intellectual Property of Nextgenware.
+
+4. CUSTOM DEVELOPMENT OWNERSHIP
+The intellectual property rights for custom modules or features developed specifically for the Client shall be determined as per the statement of work, upon full clearance of payments.
+
+5. SOURCE CODE ACCESS
+Source code access [is / is not] provided to the Client. [Specify if Escrow applies or if only object code is delivered].
+
+6. LICENSE ENFORCEMENT
+Licensor utilizes license keys and activation mechanisms. Licensor reserves the right to audit usage and suspend the license in cases of unauthorized use or payment default.
+
+7. BRANDING
+The "Developed by Nextgenware" footer link and branding may not be removed without purchasing a white-label license or receiving prior written consent.
+
+8. MAINTENANCE & UPDATE POLICY
+Bug fixes and critical security patches are provided under the active support period. Major system upgrades and new paid enhancement requests will be quoted and billed separately.
+
+9. TERMINATION
+This Agreement is effective until terminated. Licensor may terminate and revoke the license immediately if Licensee breaches any of the terms outlined herein.`
       };
     } else if (docType === "delivery_acceptance") {
       boilerplate = {

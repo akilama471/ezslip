@@ -22,6 +22,10 @@ export function DocumentPreview() {
       case "quotation":
         return <Quotation data={data} />;
       case "agreement":
+      case "sla":
+      case "delivery_acceptance":
+      case "maintenance_agreement":
+      case "source_code_handover":
         return <DeveloperAgreement data={data} />;
       default:
         return <Invoice data={data} />;
